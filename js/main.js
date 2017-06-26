@@ -4,7 +4,7 @@ var cards = [
 	{
 	rank: "queen",
 	suit: "hearts",
-	cardImage: "mages/queen-of-hears.png" 
+	cardImage: "images/queen-of-hearts.png" 
 	},
 	{
 	rank: "queen",
@@ -31,17 +31,27 @@ var checkForMatch = function () {
 		console.log("No match try again");
 	}
 	}
-}
-checkForMatch();
-var flipCard = function (cardId) {
+};
+var flipCard = function () {
+	var cardId = this.getAttribute('data-id');
 	console.log("User flipped " + cards[cardId].rank);
 	console.log(cards[cardId].cardImage);
 	console.log(cards[cardId].suit);
 	cardsInPlay.push(cards[cardId].rank);
-	flipCard();
-	flipCard(0);
-	flipCard(2);
-
-}
-
+	this.setAttribute('src', cards[cardId].cardImage);
+	if (cardsInPlay.length === 2){
+		checkForMatch();
+	}
+};
+function createBoard() {
+  var game = document.getElementById('game-board');
+  for (var i = 0; i < cards.length; i++) {
+    var new_card = document.createElement('img');
+    new_card.setAttribute('src', 'images/back.png');
+    new_card.setAttribute('data-id', i);
+    new_card.addEventListener('click', flipCard);
+    game.appendChild(new_card);
+  }
+};
+createBoard();
 	
